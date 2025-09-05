@@ -32,7 +32,7 @@ jobs:
               run: npm ci
             - name: run tests
               run: npm run test
-    deploy:
+    build :
       needs: test
       runs-on: ubuntu-latest
       steps:
@@ -43,15 +43,34 @@ jobs:
           with:
             node-version: '20'
         - name: print node version
-          run: npm install
+          run: node -v
         - name : build project
           run: npm run build
         - name : cache Dependencies
           uses: actions/cache@v4
-          with :
+          with : 
             path: ~/.npm
             key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         - name: install dependencies
-          run: npm ci
-        - name: deploy
-          run: echo "deploying hello"
+          run: npm ci 
+        - name: Build Project
+          run: npm run build  
+        - name: Upload artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: dist-folder
+            path : dist
+          
+    deploy:
+      needs: build
+      runs-on: ubuntu-latest
+      steps:
+        
+        - name: downlaod artifact
+          uses : actions/download-artifact@v3
+          with:
+            name: dist-folder
+            path : dist
+        - name: deploy to server
+          run : echo "deploying succesfully"
+        
