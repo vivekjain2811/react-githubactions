@@ -1,5 +1,15 @@
 name: DeployList
-on: [push,workflow_dispatch]
+on:
+  push :
+    branches:
+      - main  
+      - 'feature/**'
+    paths-ignore:
+      - 'README.md'
+      - '**.md'
+      - '**.txt'
+      - '.github/workflows/*'
+  workflow_dispatch:
 jobs:
     test:
         runs-on: ubuntu-latest
