@@ -44,8 +44,7 @@ jobs:
             node-version: '20'
         - name: print node version
           run: node -v
-        - name : build project
-          run: npm run build
+        
         - name : cache Dependencies
           uses: actions/cache@v4
           with : 
