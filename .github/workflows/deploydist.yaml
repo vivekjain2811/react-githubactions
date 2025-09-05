@@ -2,7 +2,7 @@ name: DeployList
 on:
   push :
     branches:
-      - main  
+      - master  
       - 'feature/**'
     paths-ignore:
       - 'README.md'
